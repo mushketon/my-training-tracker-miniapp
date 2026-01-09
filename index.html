@@ -1,11 +1,11 @@
-<! DOCTYPE html>
-<html ланг="ру">
-<голова>
-  <мета шарсет="UTF-8" />
-  <мета name="viewport" content="width=device-with, начальный масштаб=1.0"/>
-  <название>Трекер Тренировок 💪</название>
-  <сценарий src="https://telegram.org/js/telegram-web-app.js"></сценарий>
-  <вх100
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Трекер Тренировок 💪</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--tg-theme-bg-color, #000000);
@@ -13,48 +13,48 @@
       margin: 0;
       padding: 20px;
       text-align: center;
-      высота мин: 100вх;
-      размер коробки: пограничный ящик;
+      min-height: 100vh;
+      box-sizing: border-box;
     }
     h1 {
-      маржа: 0 0 20px;
-      размер шрифта: 28px;
+      margin: 0 0 20px;
+      font-size: 28px;
     }
-    #приветствие {
-      размер шрифта: 18px;
-      маржин-дно: 25px;
+    #greeting {
+      font-size: 18px;
+      margin-bottom: 25px;
     }
-    Вкладные данные, текстовая зона {
-      ширина: 100%;
-      максимальная ширина: 500px;
-      набивка: 14px;
-      маржа: 12px 0;
-      граница радиус: 12px;
-      граница: 1px твёрдое вещество вар(--тг-тема-подсказка-цвет, #888);
-      Предыстория: вар(--тг-тема-вторичный-бг-цвет, #111);
-      цвет: наследовать;
-      размер шрифта: 16px;
-      размер коробки: пограничный ящик;
+    input, textarea {
+      width: 100%;
+      max-width: 500px;
+      padding: 14px;
+      margin: 12px 0;
+      border-radius: 12px;
+      border: 1px solid var(--tg-theme-hint-color, #888);
+      background: var(--tg-theme-secondary-bg-color, #111);
+      color: inherit;
+      font-size: 16px;
+      box-sizing: border-box;
     }
-    текстовая зона {
-      изменить размер: вертикально;
-      высота мин: 120px;
+    textarea {
+      resize: vertical;
+      min-height: 120px;
     }
-    кнопка {
-      набивка: 16px 32px;
-      размер шрифта: 18px;
-      маржа: 12px 8px;
-      граница: ни одного;
-      граница радиус: 12px;
-      Предыстория: #0088cc;
-      цвет: белый;
-      курсор: пойнтер;
-      с период: Предыстория 0.2с;
+    button {
+      padding: 16px 32px;
+      font-size: 18px;
+      margin: 12px 8px;
+      border: none;
+      border-radius: 12px;
+      background: #0088cc;
+      color: white;
+      cursor: pointer;
+      transition: background 0.2s;
     }
-    кнопка:парить {
-      Предыстория: #006699;
+    button:hover {
+      background: #006699;
     }
-  </" «Принцип приятного эффекта»:\nПринцес 4×10 90 кг\nЖёл 3×8 75 кг\nПринцип 4×макс\н..."стиль
+  </style>
 </head>
 <body>
 
@@ -62,34 +62,61 @@
   
   <div id="greeting">Загружаю данные пользователя...</div>
   
-  <Вкладные данные id="weight" type="text" placeholder="Твой вес сегодня (например: 78.5 кг)" />
+  <input id="weight" type="text" placeholder="Твой вес сегодня (например: 78.5 кг)" />
   
-  <textarea id="workout" placeholder=" «Принцип приятного эффекта»:\nПринцес 4×10 90 кг\nЖёл 3×8 75 кг\nПринцип 4×макс\н..."></textarea>
+  <textarea id="workout" placeholder="Запиши тренировку здесь:\nПрисед 4×10 90 кг\nЖим лежа 3×8 75 кг\nПодтягивания 4×max\n..."></textarea>
   
-  <див>
-    <кнопка онклик(пользователь> Сохранить и отправить</button>
-    <кнопка онклик="Telegram.Веб-приложение.закройте()">Закрыть</button>
-  </див>
+  <div>
+    <button onclick="saveAndSend()">Сохранить и отправить</button>
+    <button onclick="Telegram.WebApp.close()">Закрыть</button>
+  </div>
 
-  <«сейчас»>
-    // и сразу сразу бросается в глаза Telegram Mini App
-    Телеграмма. Веб-приложение.готовление ();
-    Телеграмма. Веб-приложение. Расширенный шикячхарьхйфхйфхйфхй
+  <script>
+    // Инициализация Telegram Mini App
+    Telegram.WebApp.ready();
+    Telegram.WebApp.expand(); // растягиваем на весь экран
 
-    // самообслуживание, учреждение связи, камерирование камера камера камера
-    const user = Telegram. WebApp.initDataUnsafe?.user;
-    const приветствие = document.getElementById (" estre vis");
+    // Получаем данные пользователя
+    const user = Telegram.WebApp.initDataUnsafe?.user;
+    const greetingEl = document.getElementById('greeting');
 
-    Лилиа (пользовательский номер) {
-      ПриветствиеEl.innerHTML =`
-        Привет, < b>пользовательский опыт;
-        Идентификатор:${user.id}• Язык:${user.language_code || '?'} • Премиум: ${user.is_premium ? 'Да ⭐' : 'Нет'}
+    if (user) {
+      greetingEl.innerHTML = `
+        Привет, <b>\( {user.first_name || 'Спортсмен'}</b> \){user.last_name ? ' ' + user.last_name : ''}! 👋<br>
+        ID: ${user.id} • Язык: ${user.language_code || '?'} • Премиум: ${user.is_premium ? 'Да ⭐' : 'Нет'}
       `;
-    } Йонгонг {
-      ПриветEl.textContent = 'Привет! Данные оператор и производный (отделделённый Святитель Telegram)';
+    } else {
+      greetingEl.textContent = 'Привет! Данные пользователя не загрузились (открой через Telegram)';
     }
 
-    // апшватель Telegram (тэсэсэсэфээрэ/элампэ
-    Тема конст = Telegram. WebApp.themeParams;
+    // Адаптация под тему Telegram (тёмная/светлая)
+    const theme = Telegram.WebApp.themeParams;
     document.body.style.background = theme.bg_color || '#000000';
-    document.body.style.color = theme.text_color || #ff";f
+    document.body.style.color = theme.text_color || '#ffffff';
+
+    // Функция сохранения и отправки данных боту
+    function saveAndSend() {
+      const weight = document.getElementById('weight').value.trim();
+      const workout = document.getElementById('workout').value.trim();
+
+      if (!weight && !workout) {
+        Telegram.WebApp.showAlert('Заполни хотя бы одно поле!');
+        return;
+      }
+
+      const message = `Новая запись от \( {user?.first_name || 'анонима'} ( \){new Date().toLocaleDateString('ru-RU')}):\n` +
+                      (weight ? `Вес: ${weight}\n` : '') +
+                      (workout ? `\nТренировка:\n${workout}` : '');
+
+      Telegram.WebApp.sendData(message);  // Отправляем данные боту как строку
+      Telegram.WebApp.showAlert('Данные отправлены! Можно закрыть.');
+      Telegram.WebApp.close();
+    }
+
+    // Опционально: большая главная кнопка Telegram внизу
+    Telegram.WebApp.MainButton.setText('Сохранить и отправить боту');
+    Telegram.WebApp.MainButton.show();
+    Telegram.WebApp.MainButton.onClick(saveAndSend);
+  </script>
+</body>
+</html>
